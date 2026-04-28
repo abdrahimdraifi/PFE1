@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Réseau d'Entreprise Sécurisé — PFE OFPPT NTIC Safi</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05080f;
+    --bg2: #080d18;
+    --surface: #0d1424;
+    --surface2: #111b30;
+    --border: #1e2d4a;
+    --accent: #00d4ff;
+    --accent2: #0066ff;
+    --accent3: #ff6b2b;
+    --green: #00ff9d;
+    --yellow: #ffd500;
+    --text: #c8d8f0;
+    --text-dim: #5a7090;
+    --text-bright: #e8f4ff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* GRID NOISE BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* SCAN LINE */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    animation: scanline 8s linear infinite;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  @keyframes scanline {
+    0% { top: -2px; }
+    100% { top: 100vh; }
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(5,8,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+    color: var(--accent);
+  }
+
+  .nav-logo span { color: var(--text-dim); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--green);
+    border: 1px solid var(--green);
+    padding: 4px 10px;
+    letter-spacing: 1px;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 48px 80px;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,102,255,0.15) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%,-50%) scale(1.1); }
+  }
+
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 8rem);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    color: var(--text-bright);
+    margin-bottom: 12px;
+  }
+
+  h1 .accent { color: var(--accent); }
+  h1 .dim { color: var(--text-dim); }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--text-dim);
+    max-width: 560px;
+    margin: 28px 0 48px;
+    line-height: 1.8;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .meta-value {
+    font-size: 0.9rem;
+    color: var(--text-bright);
+    font-weight: 500;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 100px 48px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 64px;
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 2px;
+  }
+
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    letter-spacing: 2px;
+    color: var(--text-bright);
+  }
+
+  h2 .line {
+    display: block;
+    color: var(--text-dim);
+    font-size: 0.55em;
+  }
+
+  /* INTRO BLOCK */
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .intro-cell {
+    background: var(--surface);
+    padding: 40px;
+    transition: background 0.3s;
+  }
+
+  .intro-cell:hover { background: var(--surface2); }
+
+  .intro-cell.wide {
+    grid-column: span 2;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cell-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .cell-text {
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.8;
+  }
+
+  /* ARCHITECTURE — 3 LAYERS */
+  .layers {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .layer-card {
+    display: grid;
+    grid-template-columns: 220px 1fr auto;
+    align-items: center;
+    gap: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid transparent;
+    overflow: hidden;
+    transition: border-color 0.3s, background 0.3s;
+    cursor: default;
+  }
+
+  .layer-card:hover { background: var(--surface2); }
+  .layer-card.core { border-left-color: var(--accent); }
+  .layer-card.distribution { border-left-color: var(--accent2); }
+  .layer-card.access { border-left-color: var(--green); }
+
+  .layer-id {
+    padding: 36px 32px;
+    border-right: 1px solid var(--border);
+  }
+
+  .layer-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    color: var(--text-bright);
+    margin-bottom: 4px;
+  }
+
+  .layer-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+  }
+
+  .layer-body {
+    padding: 28px 36px;
+  }
+
+  .layer-desc {
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 1.75;
+  }
+
+  .layer-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    transition: all 0.2s;
+  }
+
+  .tag:hover { border-color: var(--accent); color: var(--accent); }
+
+  .layer-stat {
+    padding: 36px 40px;
+    border-left: 1px solid var(--border);
+    text-align: center;
+    min-width: 120px;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+  }
+
+  .layer-card.distribution .stat-num { color: var(--accent2); }
+  .layer-card.access .stat-num { color: var(--green); }
+
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* SECURITY SECTION */
+  .security-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+  }
+
+  .sec-card {
+    background: var(--surface);
+    padding: 36px;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sec-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent3);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .sec-card:hover::before { transform: scaleX(1); }
+  .sec-card:hover { background: var(--surface2); }
+
+  .sec-icon {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .sec-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    color: var(--text-bright);
+    margin-bottom: 14px;
+  }
+
+  .sec-text {
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.75;
+  }
+
+  /* SERVICES GRID */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--border);
+  }
+
+  .srv-card {
+    background: var(--surface);
+    padding: 28px;
+    text-align: center;
+    transition: background 0.3s, transform 0.3s;
+    cursor: default;
+  }
+
+  .srv-card:hover {
+    background: var(--surface2);
+    transform: translateY(-4px);
+  }
+
+  .srv-icon {
+    font-size: 1.8rem;
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .srv-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .srv-desc {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+  }
+
+  /* TECH STACK */
+  .stack-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .stack-category {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 28px;
+  }
+
+  .stack-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    padding: 8px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    letter-spacing: 1px;
+    transition: all 0.25s;
+    cursor: default;
+  }
+
+  .stack-pill:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,212,255,0.05);
+  }
+
+  /* TOPOLOGY VISUAL */
+  .topo-container {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .topo-container::before {
+    content: 'TOPOLOGY';
+    position: absolute;
+    top: 20px; right: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--border);
+    letter-spacing: 4px;
+  }
+
+  .topo-svg {
+    width: 100%;
+    height: auto;
+  }
+
+  /* KALI SECTION */
+  .kali-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent3);
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .kali-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    color: var(--accent3);
+    margin-bottom: 16px;
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-left {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+  }
+
+  .footer-right {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 0 48px;
+  }
+
+  /* FADE IN ANIMATION */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 0.7s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+  .delay-5 { animation-delay: 0.5s; }
+
+  /* TERMINAL BLOCK */
+  .terminal {
+    background: #020408;
+    border: 1px solid var(--border);
+    padding: 24px 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--green);
+    line-height: 2;
+    position: relative;
+  }
+
+  .terminal::before {
+    content: '● ● ●';
+    display: block;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    letter-spacing: 6px;
+    font-size: 0.7rem;
+  }
+
+  .terminal .prompt { color: var(--accent); }
+  .terminal .cmd { color: var(--text-bright); }
+  .terminal .out { color: var(--text-dim); }
+  .terminal .ok { color: var(--green); }
+  .terminal .err { color: var(--accent3); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero, section { padding: 80px 24px; }
+    .intro-grid { grid-template-columns: 1fr; }
+    .intro-cell.wide { grid-column: span 1; }
+    .layer-card { grid-template-columns: 1fr; }
+    .layer-stat { display: none; }
+    .security-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .kali-block { grid-template-columns: 1fr; }
+    footer { padding: 32px 24px; }
+    .divider { margin: 0 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">NTIC<span>/SAFI</span></div>
+  <ul class="nav-links">
+    <li><a href="#objectif">Objectif</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#securite">Sécurité</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#outils">Outils</a></li>
+  </ul>
+  <div class="nav-badge">PFE · 2025–2026</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+
+  <div class="hero-tag fade-in">Projet de Fin d'Études — OFPPT</div>
+
+  <h1 class="fade-in delay-1">
+    <span class="dim">Réseau</span><br>
+    <span class="accent">Entreprise</span><br>
+    SÉCURISÉ
+  </h1>
+
+  <p class="hero-sub fade-in delay-2">
+    Conception et implémentation d'une infrastructure réseau hiérarchique, robuste et évolutive, simulant l'environnement informatique d'une grande organisation.
+  </p>
+
+  <div class="hero-meta fade-in delay-3">
+    <div class="meta-item">
+      <span class="meta-label">Institut</span>
+      <span class="meta-value">ISTA NTIC Safi</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Filière</span>
+      <span class="meta-value">Infrastructure Digitale — S&R</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Plateforme</span>
+      <span class="meta-value">GNS3 + VMware</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Modèle</span>
+      <span class="meta-value">Cisco 3 Couches</span>
+    </div>
+  </div>
+
+  <div class="hero-scroll">↓ &nbsp; Défiler</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- OBJECTIF -->
+<section id="objectif">
+  <div class="section-header fade-in">
+    <span class="section-num">01</span>
+    <h2>Contexte <span class="line">& Objectif</span></h2>
+  </div>
+
+  <div class="intro-grid fade-in delay-1">
+    <div class="intro-cell wide">
+      <div class="cell-label">Vue d'ensemble</div>
+      <p class="cell-text">
+        Dans le cadre de notre Projet de Fin d'Études au sein de l'OFPPT — Institut Spécialisé de Technologie Appliquée NTIC de Safi, filière <strong style="color:var(--text-bright)">Infrastructure Digitale – Systèmes & Réseaux</strong>, nous avons conçu et implémenté un réseau d'entreprise complet simulant l'environnement informatique d'une grande organisation. Ce projet constitue l'aboutissement de notre formation et reflète l'ensemble des compétences techniques acquises tout au long de notre parcours.
+      </p>
+    </div>
+    <div class="intro-cell">
+      <div class="cell-label">Objectif Principal</div>
+      <p class="cell-text">Concevoir une infrastructure réseau hiérarchique, robuste, sécurisée et évolutive, en s'appuyant sur les meilleures pratiques de l'industrie. Nous avons adopté le <strong style="color:var(--text-bright)">modèle hiérarchique à trois couches de Cisco</strong>, reconnu mondialement dans la conception des réseaux d'entreprise.</p>
+    </div>
+    <div class="intro-cell">
+      <div class="cell-label">Compétences Développées</div>
+      <p class="cell-text">Routage dynamique, commutation avancée, sécurité réseau, virtualisation, administration système Windows Server et Linux, analyse du trafic réseau et audit de sécurité — une expérience complète et représentative d'un environnement professionnel réel.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+  <div class="section-header fade-in">
+    <span class="section-num">02</span>
+    <h2>Architecture <span class="line">Hiérarchique à 3 Couches</span></h2>
+  </div>
+
+  <div class="layers fade-in delay-1">
+
+    <div class="layer-card core">
+      <div class="layer-id">
+        <div class="layer-name">CORE</div>
+        <div class="layer-type">Couche Cœur</div>
+      </div>
+      <div class="layer-body">
+        <p class="layer-desc">Assure le <strong style="color:var(--text-bright)">transport rapide des données</strong> entre les différents blocs du réseau grâce à deux commutateurs de niveau 3 redondants interconnectés, garantissant une haute disponibilité et une tolérance aux pannes.</p>
+        <div class="layer-tags">
+          <span class="tag">Haute Disponibilité</span>
+          <span class="tag">Redondance</span>
+          <span class="tag">Tolérance aux Pannes</span>
+          <span class="tag">L3 Switching</span>
+        </div>
+      </div>
+      <div class="layer-stat">
+        <span class="stat-num">2</span>
+        <span class="stat-label">Switches L3</span>
+      </div>
+    </div>
+
+    <div class="layer-card distribution">
+      <div class="layer-id">
+        <div class="layer-name">DISTRIB</div>
+        <div class="layer-type">Couche Distribution</div>
+      </div>
+      <div class="layer-body">
+        <p class="layer-desc">Prend en charge le <strong style="color:var(--text-bright)">routage inter-VLAN</strong>, l'application des politiques QoS, ainsi que le protocole <strong style="color:var(--text-bright)">HSRP</strong> assurant le basculement automatique en cas de défaillance d'un équipement.</p>
+        <div class="layer-tags">
+          <span class="tag">Routage Inter-VLAN</span>
+          <span class="tag">HSRP</span>
+          <span class="tag">QoS</span>
+          <span class="tag">OSPF</span>
+        </div>
+      </div>
+      <div class="layer-stat">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Switches L3</span>
+      </div>
+    </div>
+
+    <div class="layer-card access">
+      <div class="layer-id">
+        <div class="layer-name">ACCESS</div>
+        <div class="layer-type">Couche Accès</div>
+      </div>
+      <div class="layer-body">
+        <p class="layer-desc">Regroupe les équipements terminaux organisés en <strong style="color:var(--text-bright)">VLANs distincts par département</strong> : Ressources Humaines, Finance, Informatique, VoIP et WiFi. Point de connexion des utilisateurs finaux au réseau.</p>
+        <div class="layer-tags">
+          <span class="tag">VLAN RH</span>
+          <span class="tag">VLAN Finance</span>
+          <span class="tag">VLAN Info</span>
+          <span class="tag">VLAN VoIP</span>
+          <span class="tag">VLAN WiFi</span>
+        </div>
+      </div>
+      <div class="layer-stat">
+        <span class="stat-num">6</span>
+        <span class="stat-label">Switches L2</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TOPOLOGY SVG -->
+<section style="padding: 60px 48px;">
+  <div class="topo-container fade-in">
+    <svg class="topo-svg" viewBox="0 0 960 680" xmlns="http://www.w3.org/2000/svg" font-family="'JetBrains Mono', monospace">
+
+      <!-- ===== ZONE BANDS ===== -->
+      <!-- Internet/DMZ -->
+      <rect x="10" y="8" width="940" height="76" rx="4" fill="rgba(255,107,43,0.04)" stroke="rgba(255,107,43,0.15)" stroke-width="1"/>
+      <text x="26" y="28" fill="rgba(255,107,43,0.55)" font-size="8" letter-spacing="3">INTERNET / DMZ</text>
+
+      <!-- pfSense -->
+      <rect x="10" y="92" width="940" height="68" rx="4" fill="rgba(255,213,0,0.04)" stroke="rgba(255,213,0,0.15)" stroke-width="1"/>
+      <text x="26" y="110" fill="rgba(255,213,0,0.5)" font-size="8" letter-spacing="3">FIREWALL</text>
+
+      <!-- CORE -->
+      <rect x="10" y="168" width="940" height="80" rx="4" fill="rgba(0,212,255,0.04)" stroke="rgba(0,212,255,0.15)" stroke-width="1"/>
+      <text x="26" y="187" fill="rgba(0,212,255,0.55)" font-size="8" letter-spacing="3">CORE</text>
+
+      <!-- DISTRIBUTION -->
+      <rect x="10" y="256" width="940" height="84" rx="4" fill="rgba(0,102,255,0.04)" stroke="rgba(0,102,255,0.15)" stroke-width="1"/>
+      <text x="26" y="275" fill="rgba(0,102,255,0.55)" font-size="8" letter-spacing="3">DISTRIBUTION</text>
+
+      <!-- ACCESS -->
+      <rect x="10" y="348" width="940" height="88" rx="4" fill="rgba(0,255,157,0.04)" stroke="rgba(0,255,157,0.15)" stroke-width="1"/>
+      <text x="26" y="367" fill="rgba(0,255,157,0.55)" font-size="8" letter-spacing="3">ACCÈS</text>
+
+      <!-- ENDPOINTS -->
+      <rect x="10" y="444" width="940" height="228" rx="4" fill="rgba(90,112,144,0.03)" stroke="rgba(90,112,144,0.12)" stroke-width="1"/>
+      <text x="26" y="464" fill="rgba(90,112,144,0.45)" font-size="8" letter-spacing="3">ENDPOINTS</text>
+
+
+      <!-- ===== INTERNET / CLOUD ===== -->
+      <!-- Cloud shape -->
+      <g transform="translate(480,38)">
+        <ellipse cx="-30" cy="4" rx="28" ry="16" fill="#0d1424" stroke="#5a7090" stroke-width="1.2"/>
+        <ellipse cx="0" cy="-4" rx="22" ry="14" fill="#0d1424" stroke="#5a7090" stroke-width="1.2"/>
+        <ellipse cx="28" cy="4" rx="22" ry="14" fill="#0d1424" stroke="#5a7090" stroke-width="1.2"/>
+        <rect x="-52" y="6" width="108" height="14" rx="0" fill="#0d1424"/>
+        <line x1="-52" y1="6" x2="-52" y2="20" stroke="#5a7090" stroke-width="1.2"/>
+        <line x1="56" y1="6" x2="56" y2="20" stroke="#5a7090" stroke-width="1.2"/>
+        <line x1="-52" y1="20" x2="56" y2="20" stroke="#5a7090" stroke-width="1.2"/>
+        <text x="0" y="16" fill="#5a7090" font-size="7.5" text-anchor="middle" letter-spacing="1">Cloud / Internet</text>
+        <!-- VMnet8 label -->
+        <text x="90" y="-2" fill="#5a7090" font-size="6.5" text-anchor="middle">VMware VMnet8</text>
+      </g>
+
+      <!-- Cent7WEB/EMAIL VM -->
+      <g transform="translate(180,42)">
+        <rect x="-44" y="-18" width="88" height="36" rx="3" fill="#0d1424" stroke="#ffd500" stroke-width="1.2"/>
+        <text x="0" y="-4" fill="#ffd500" font-size="7.5" text-anchor="middle">Cent7WEB</text>
+        <text x="0" y="8" fill="#5a7090" font-size="6.5" text-anchor="middle">/EMAIL-1</text>
+      </g>
+
+      <!-- ===== pfSense FIREWALL ===== -->
+      <g transform="translate(480,126)">
+        <rect x="-52" y="-18" width="104" height="36" rx="3" fill="#0d1424" stroke="#ff6b2b" stroke-width="2"/>
+        <text x="0" y="-4" fill="#ff6b2b" font-size="9" text-anchor="middle" letter-spacing="1">pfSense 2.7.0</text>
+        <text x="0" y="10" fill="#5a7090" font-size="6.5" text-anchor="middle">Firewall / NAT · em0–em2</text>
+      </g>
+      <!-- WindowsServer2019 VM -->
+	<g transform="translate(160,208)">
+        <rect x="-50" y="-18" width="100" height="36" rx="3" fill="#0d1424" stroke="#c8d8f0" stroke-width="1.2"/>
+        <text x="0" y="-4" fill="#c8d8f0" font-size="7.5" text-anchor="middle">WinServer 2019</text>
+        <text x="0" y="9" fill="#5a7090" font-size="6.5" text-anchor="middle">172.16.3.100/24</text>
+      </g>
+	<line x1="210" y1="208" x2="320" y2="208" stroke="#c8d8f0" stroke-width="1.5" opacity="0.7"/>
+
+      <!-- Cloud → pfSense (em0) -->
+      <line x1="480" y1="58" x2="480" y2="108" stroke="#5a7090" stroke-width="1.5" opacity="0.7"/>
+      <!-- Cent7 → pfSense (em3) -->
+      <line x1="224" y1="42" x2="430" y2="122" stroke="#ffd500" stroke-width="1" opacity="0.6" stroke-dasharray="5,3"/>
+
+      <!-- ===== CORE LAYER ===== -->
+      <!-- pfSense em1 → CORE-SW1 (10.0.1.0/24) -->
+      <line x1="448" y1="144" x2="340" y2="200" stroke="#00d4ff" stroke-width="1.5" opacity="0.7"/>
+      <!-- pfSense em2 → CORE-SW2 (10.0.2.1/24) -->
+      <line x1="512" y1="144" x2="620" y2="200" stroke="#00d4ff" stroke-width="1.5" opacity="0.7"/>
+
+      <!-- CORE-SW1 -->
+      <g transform="translate(340,208)">
+        <rect x="-46" y="-18" width="92" height="36" rx="3" fill="#0d1424" stroke="#00d4ff" stroke-width="2"/>
+        <text x="0" y="-3" fill="#00d4ff" font-size="8.5" text-anchor="middle" letter-spacing="1">CORE-SW1</text>
+        <text x="0" y="10" fill="#5a7090" font-size="6.5" text-anchor="middle">10.0.1.0/24</text>
+      </g>
+      <!-- CORE-SW2 -->
+      <g transform="translate(620,208)">
+        <rect x="-46" y="-18" width="92" height="36" rx="3" fill="#0d1424" stroke="#00d4ff" stroke-width="2"/>
+        <text x="0" y="-3" fill="#00d4ff" font-size="8.5" text-anchor="middle" letter-spacing="1">CORE-SW2</text>
+        <text x="0" y="10" fill="#5a7090" font-size="6.5" text-anchor="middle">10.0.2.1/24</text>
+      </g>
+      <!-- Core interconnect (e0/1 – e0/0) -->
+      <line x1="386" y1="208" x2="574" y2="208" stroke="#00d4ff" stroke-width="2" stroke-dasharray="7,3" opacity="0.8"/>
+
+      <!-- ===== DISTRIBUTION LAYER ===== -->
+      <!-- DIST-SW1 -->
+      <g transform="translate(180,298)">
+        <rect x="-46" y="-18" width="92" height="36" rx="3" fill="#0d1424" stroke="#0066ff" stroke-width="1.8"/>
+        <text x="0" y="-3" fill="#0066ff" font-size="8.5" text-anchor="middle" letter-spacing="1">DIST-SW1</text>
+        <text x="0" y="10" fill="#5a7090" font-size="6.5" text-anchor="middle">L3 Distribution</text>
+      </g>
+      <!-- DIST-SW2 -->
+      <g transform="translate(480,298)">
+        <rect x="-46" y="-18" width="92" height="36" rx="3" fill="#0d1424" stroke="#0066ff" stroke-width="1.8"/>
+        <text x="0" y="-3" fill="#0066ff" font-size="8.5" text-anchor="middle" letter-spacing="1">DIST-SW2</text>
+        <text x="0" y="10" fill="#5a7090" font-size="6.5" text-anchor="middle">L3 Distribution</text>
+      </g>
+      <!-- DIST-SW3 -->
+      <g transform="translate(780,298)">
+        <rect x="-46" y="-18" width="92" height="36" rx="3" fill="#0d1424" stroke="#0066ff" stroke-width="1.8"/>
+        <text x="0" y="-3" fill="#0066ff" font-size="8.5" text-anchor="middle" letter-spacing="1">DIST-SW3</text>
+        <text x="0" y="10" fill="#5a7090" font-size="6.5" text-anchor="middle">L3 Distribution</text>
+      </g>
+
+      <!-- CORE-SW1 → DIST-SW1 (e0/2, e1/2) -->
+      <line x1="320" y1="226" x2="200" y2="280" stroke="#0066ff" stroke-width="1.3" opacity="0.65"/>
+      <!-- CORE-SW1 → DIST-SW2 (e1/3, e0/0) -->
+      <line x1="355" y1="226" x2="462" y2="280" stroke="#0066ff" stroke-width="1.3" opacity="0.65"/>
+      <!-- CORE-SW1 → DIST-SW3 (e1/2 cross) -->
+      <line x1="386" y1="220" x2="758" y2="282" stroke="#0066ff" stroke-width="0.8" opacity="0.3" stroke-dasharray="4,4"/>
+      <!-- CORE-SW2 → DIST-SW2 (e1/0, e0/1) -->
+      <line x1="605" y1="226" x2="498" y2="280" stroke="#0066ff" stroke-width="1.3" opacity="0.65"/>
+      <!-- CORE-SW2 → DIST-SW3 (e0/0, e0/1) -->
+      <line x1="640" y1="226" x2="760" y2="280" stroke="#0066ff" stroke-width="1.3" opacity="0.65"/>
+
+      <!-- ===== ACCESS LAYER ===== -->
+      <!-- ACC-SW1 -->
+      <g transform="translate(90,390)">
+        <rect x="-42" y="-15" width="84" height="30" rx="3" fill="#0d1424" stroke="#00ff9d" stroke-width="1.3"/>
+        <text x="0" y="4" fill="#00ff9d" font-size="8" text-anchor="middle">ACC-SW1</text>
+      </g>
+      <!-- ACC-SW2 -->
+      <g transform="translate(270,390)">
+        <rect x="-42" y="-15" width="84" height="30" rx="3" fill="#0d1424" stroke="#00ff9d" stroke-width="1.3"/>
+        <text x="0" y="4" fill="#00ff9d" font-size="8" text-anchor="middle">ACC-SW2</text>
+      </g>
+      <!-- ACC-SW3 -->
+      <g transform="translate(400,390)">
+        <rect x="-42" y="-15" width="84" height="30" rx="3" fill="#0d1424" stroke="#00ff9d" stroke-width="1.3"/>
+        <text x="0" y="4" fill="#00ff9d" font-size="8" text-anchor="middle">ACC-SW3</text>
+      </g>
+      <!-- ACC-SW4 -->
+      <g transform="translate(560,390)">
+        <rect x="-42" y="-15" width="84" height="30" rx="3" fill="#0d1424" stroke="#00ff9d" stroke-width="1.3"/>
+        <text x="0" y="4" fill="#00ff9d" font-size="8" text-anchor="middle">ACC-SW4</text>
+      </g>
+      <!-- ACC-SW5 -->
+      <g transform="translate(690,390)">
+        <rect x="-42" y="-15" width="84" height="30" rx="3" fill="#0d1424" stroke="#00ff9d" stroke-width="1.3"/>
+        <text x="0" y="4" fill="#00ff9d" font-size="8" text-anchor="middle">ACC-SW5</text>
+      </g>
+      <!-- ACC-SW6 -->
+      <g transform="translate(870,390)">
+        <rect x="-42" y="-15" width="84" height="30" rx="3" fill="#0d1424" stroke="#00ff9d" stroke-width="1.3"/>
+        <text x="0" y="4" fill="#00ff9d" font-size="8" text-anchor="middle">ACC-SW6</text>
+      </g>
+
+      <!-- DIST-SW1 → ACC-SW1 (e1/0) -->
+      <line x1="165" y1="316" x2="106" y2="375" stroke="#00ff9d" stroke-width="1" opacity="0.55"/>
+      <!-- DIST-SW1 → ACC-SW2 (e1/1) -->
+      <line x1="195" y1="316" x2="255" y2="375" stroke="#00ff9d" stroke-width="1" opacity="0.55"/>
+      <!-- DIST-SW2 → ACC-SW3 (e1/0) -->
+      <line x1="466" y1="316" x2="416" y2="375" stroke="#00ff9d" stroke-width="1" opacity="0.55"/>
+      <!-- DIST-SW2 → ACC-SW4 (e1/1) -->
+      <line x1="494" y1="316" x2="544" y2="375" stroke="#00ff9d" stroke-width="1" opacity="0.55"/>
+      <!-- DIST-SW3 → ACC-SW5 (e1/0) -->
+      <line x1="766" y1="316" x2="706" y2="375" stroke="#00ff9d" stroke-width="1" opacity="0.55"/>
+      <!-- DIST-SW3 → ACC-SW6 (e1/1) -->
+      <line x1="795" y1="316" x2="855" y2="375" stroke="#00ff9d" stroke-width="1" opacity="0.55"/>
+
+      <!-- ===== ENDPOINTS ===== -->
+	<!-- Kali Linux VM under ACC-SW1 -->
+	<g transform="translate(90,490)">
+	  <rect x="-44" y="-16" width="88" height="32" rx="3" fill="#0d1424" stroke="#ff6b2b" stroke-width="1.2"/>
+        <text x="0" y="-4" fill="#ff6b2b" font-size="7.5" text-anchor="middle">Kali Linux</text>
+        <text x="0" y="9" fill="#5a7090" font-size="6.5" text-anchor="middle">192.168.10.101/24</text>
+      </g>
+
+      <!-- PC2 under ACC-SW2 -->
+      <g transform="translate(270,490)">
+        <rect x="-32" y="-16" width="64" height="32" rx="3" fill="#0d1424" stroke="#5a7090" stroke-width="1"/>
+        <text x="0" y="-3" fill="#c8d8f0" font-size="7.5" text-anchor="middle">PC2</text>
+        <text x="0" y="9" fill="#5a7090" font-size="6.5" text-anchor="middle">VPCS</text>
+      </g>
+      <line x1="270" y1="405" x2="270" y2="474" stroke="#5a7090" stroke-width="1" opacity="0.5"/>
+      <line x1="90" y1="405" x2="90" y2="474" stroke="#5a7090" stroke-width="1" opacity="0.5"/>
+
+      <!-- PC3 under ACC-SW3 -->
+      <g transform="translate(400,490)">
+        <rect x="-32" y="-16" width="64" height="32" rx="3" fill="#0d1424" stroke="#5a7090" stroke-width="1"/>
+        <text x="0" y="-3" fill="#c8d8f0" font-size="7.5" text-anchor="middle">PC3</text>
+        <text x="0" y="9" fill="#5a7090" font-size="6.5" text-anchor="middle">VPCS</text>
+      </g>
+      <line x1="400" y1="405" x2="400" y2="474" stroke="#5a7090" stroke-width="1" opacity="0.5"/>
+
+      <!-- PC4 under ACC-SW4 -->
+      <g transform="translate(560,490)">
+        <rect x="-32" y="-16" width="64" height="32" rx="3" fill="#0d1424" stroke="#5a7090" stroke-width="1"/>
+        <text x="0" y="-3" fill="#c8d8f0" font-size="7.5" text-anchor="middle">PC4</text>
+        <text x="0" y="9" fill="#5a7090" font-size="6.5" text-anchor="middle">VPCS</text>
+      </g>
+      <line x1="560" y1="405" x2="560" y2="474" stroke="#5a7090" stroke-width="1" opacity="0.5"/>
+
+      <!-- Windows10 VM under ACC-SW5 -->
+      <g transform="translate(690,490)">
+        <rect x="-46" y="-16" width="92" height="32" rx="3" fill="#0d1424" stroke="#c8d8f0" stroke-width="1.2"/>
+        <text x="0" y="-3" fill="#c8d8f0" font-size="7" text-anchor="middle">Windows10 x64</text>
+        <text x="0" y="9" fill="#5a7090" font-size="6.5" text-anchor="middle">VM</text>
+      </g>
+      <line x1="690" y1="405" x2="690" y2="474" stroke="#5a7090" stroke-width="1" opacity="0.5"/>
+
+      <!-- PC6 under ACC-SW6 -->
+      <g transform="translate(870,490)">
+        <rect x="-32" y="-16" width="64" height="32" rx="3" fill="#0d1424" stroke="#5a7090" stroke-width="1"/>
+        <text x="0" y="-3" fill="#c8d8f0" font-size="7.5" text-anchor="middle">PC6</text>
+        <text x="0" y="9" fill="#5a7090" font-size="6.5" text-anchor="middle">VPCS</text>
+      </g>
+      <line x1="870" y1="405" x2="870" y2="474" stroke="#5a7090" stroke-width="1" opacity="0.5"/>
+
+<!-- SECURITE -->
+<section id="securite">
+  <div class="section-header fade-in">
+    <span class="section-num">03</span>
+    <h2>Sécurité <span class="line">Infrastructure & Périmètre</span></h2>
+  </div>
+
+  <div class="security-grid fade-in delay-1">
+
+    <div class="sec-card">
+      <span class="sec-icon">🛡️</span>
+      <div class="sec-title">pfSense Firewall</div>
+      <p class="sec-text">Pare-feu positionné entre le routeur de bordure et le réseau interne, assurant le <strong style="color:var(--text-bright)">filtrage du trafic</strong>, la translation d'adresses NAT, et la séparation des zones réseau.</p>
+    </div>
+
+    <div class="sec-card">
+      <span class="sec-icon">🔒</span>
+      <div class="sec-title">Zone DMZ</div>
+      <p class="sec-text">Zone démilitarisée hébergeant les <strong style="color:var(--text-bright)">serveurs exposés à Internet</strong> (Web & Mail), tout en les isolant complètement du réseau interne de l'entreprise.</p>
+    </div>
+
+    <div class="sec-card">
+      <span class="sec-icon">🔀</span>
+      <div class="sec-title">OSPF & HSRP</div>
+      <p class="sec-text">Protocole OSPF pour un <strong style="color:var(--text-bright)">routage dynamique efficace</strong> entre les couches Core et Distribution. HSRP pour le basculement automatique et la haute disponibilité.</p>
+    </div>
+
+    <div class="sec-card">
+      <span class="sec-icon">🏷️</span>
+      <div class="sec-title">Segmentation VLAN</div>
+      <p class="sec-text">Isolation des départements par VLANs distincts — RH, Finance, Informatique, VoIP, WiFi — limitant la surface d'attaque et <strong style="color:var(--text-bright)">contrôlant les flux inter-départements</strong>.</p>
+    </div>
+
+    <div class="sec-card">
+      <span class="sec-icon">🖥️</span>
+      <div class="sec-title">Ferme de Serveurs</div>
+      <p class="sec-text">Segment dédié regroupant les services essentiels : <strong style="color:var(--text-bright)">Active Directory, DNS, DHCP et FTP</strong>, isolé du reste du réseau avec des politiques d'accès strictes.</p>
+    </div>
+
+    <div class="sec-card">
+      <span class="sec-icon">⚡</span>
+      <div class="sec-title">QoS & Politiques</div>
+      <p class="sec-text">Application des politiques de <strong style="color:var(--text-bright)">qualité de service (QoS)</strong> au niveau Distribution pour prioriser le trafic VoIP critique et garantir les SLAs réseau.</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- KALI LINUX -->
+<section style="padding: 80px 48px;">
+  <div class="kali-block fade-in">
+    <div>
+      <div class="cell-label" style="color:var(--accent3)">Sécurité Offensive</div>
+      <div class="kali-title">Kali Linux<br>& Analyse Réseau</div>
+      <p class="cell-text" style="margin-bottom: 20px;">
+        Une machine <strong style="color:var(--text-bright)">Kali Linux</strong> a été intégrée à l'infrastructure au niveau de la couche Accès, permettant d'effectuer des opérations de sniffing et d'analyse du trafic réseau, simulant les techniques utilisées par les auditeurs de sécurité.
+      </p>
+      <div class="layer-tags">
+        <span class="tag">Wireshark</span>
+        <span class="tag">tcpdump</span>
+        <span class="tag">Sniffing</span>
+        <span class="tag">Audit Sécurité</span>
+        <span class="tag">Pentest</span>
+      </div>
+    </div>
+    <div>
+      <div class="terminal">
+<span class="prompt">root@kali</span>:<span style="color:var(--accent2)">~</span># <span class="cmd">nmap -sV -p 21,53,88,389,445,3389 172.16.3.100</span>
+<span class="out">Starting Nmap 7.94 — Target: 172.16.3.100</span>
+<span class="out">Host is up (0.0032s latency)</span>
+<span class="out"></span>
+<span class="out">PORT     STATE  SERVICE        VERSION</span>
+<span class="ok">21/tcp   open   ftp            Microsoft ftpd</span>
+<span class="ok">53/tcp   open   domain         Simple DNS Plus</span>
+<span class="ok">88/tcp   open   kerberos-sec   Microsoft Windows Kerberos</span>
+<span class="ok">389/tcp  open   ldap           Microsoft Windows AD LDAP</span>
+<span class="ok">445/tcp  open   microsoft-ds   Windows Server 2019</span>
+<span class="err">3389/tcp closed ms-wbt-server</span>
+<span class="out"></span>
+<span class="prompt">root@kali</span>:<span style="color:var(--accent2)">~</span># <span class="cmd">dig @172.16.3.100 NTIC.local ANY</span>
+<span class="ok">;; ANSWER SECTION:</span>
+<span class="ok">NTIC.local.  600  IN  A    172.16.3.100</span>
+<span class="ok">NTIC.local.  600  IN  NS   winserver2019.NTIC.local.</span>
+<span class="out">;; Query time: 4 msec</span>
+<span class="out"></span>
+<span class="prompt">root@kali</span>:<span style="color:var(--accent2)">~</span># <span class="cmd">ftp 172.16.3.100</span>
+<span class="out">Connected to 172.16.3.100.</span>
+<span class="out">220 Microsoft FTP Service</span>
+<span class="err">530 User anonymous: Access denied.</span>
+<span class="out">ftp&gt; quit</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header fade-in">
+    <span class="section-num">04</span>
+    <h2>Services <span class="line">Réseau & Systèmes</span></h2>
+  </div>
+
+  <div class="services-grid fade-in delay-1">
+    <div class="srv-card">
+      <span class="srv-icon">🗂️</span>
+      <div class="srv-name">Active Directory</div>
+      <div class="srv-desc">Gestion centralisée des utilisateurs, groupes et politiques GPO</div>
+    </div>
+    <div class="srv-card">
+      <span class="srv-icon">🌐</span>
+      <div class="srv-name">DNS</div>
+      <div class="srv-desc">Résolution de noms interne et externe, zones primaires/secondaires</div>
+    </div>
+    <div class="srv-card">
+      <span class="srv-icon">📡</span>
+      <div class="srv-name">DHCP</div>
+      <div class="srv-desc">Attribution dynamique d'adresses IP par VLAN avec étendues dédiées</div>
+    </div>
+    <div class="srv-card">
+      <span class="srv-icon">📁</span>
+      <div class="srv-name">FTP</div>
+      <div class="srv-desc">Serveur de fichiers interne avec contrôle d'accès par utilisateur</div>
+    </div>
+    <div class="srv-card">
+      <span class="srv-icon">🌍</span>
+      <div class="srv-name">Web Server</div>
+      <div class="srv-desc">Apache HTTP Server exposé en DMZ, accessible depuis Internet</div>
+    </div>
+    <div class="srv-card">
+      <span class="srv-icon">📧</span>
+      <div class="srv-name">Mail Server</div>
+      <div class="srv-desc">Serveur de messagerie d'entreprise hébergé en zone DMZ</div>
+    </div>
+    <div class="srv-card">
+      <span class="srv-icon">📞</span>
+      <div class="srv-name">VoIP</div>
+      <div class="srv-desc">VLAN dédié à la téléphonie IP avec priorisation QoS</div>
+    </div>
+    <div class="srv-card">
+      <span class="srv-icon">📶</span>
+      <div class="srv-name">WiFi</div>
+      <div class="srv-desc">Réseau sans fil segmenté via VLAN dédié pour les accès mobiles</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- OUTILS -->
+<section id="outils">
+  <div class="section-header fade-in">
+    <span class="section-num">05</span>
+    <h2>Stack <span class="line">Technologique</span></h2>
+  </div>
+
+  <div class="fade-in delay-1">
+    <div class="stack-category">Simulation & Virtualisation</div>
+    <div class="stack-row">
+      <span class="stack-pill">GNS3</span>
+      <span class="stack-pill">VMware Workstation</span>
+      <span class="stack-pill">Cisco IOU L2</span>
+      <span class="stack-pill">Cisco IOU L3</span>
+    </div>
+
+    <div class="stack-category">Systèmes d'Exploitation</div>
+    <div class="stack-row">
+      <span class="stack-pill">Windows Server</span>
+      <span class="stack-pill">CentOS 7</span>
+      <span class="stack-pill">Kali Linux</span>
+      <span class="stack-pill">pfSense</span>
+    </div>
+
+    <div class="stack-category">Protocoles Réseau</div>
+    <div class="stack-row">
+      <span class="stack-pill">OSPF</span>
+      <span class="stack-pill">HSRP</span>
+      <span class="stack-pill">VLAN / 802.1Q</span>
+      <span class="stack-pill">STP / RSTP</span>
+      <span class="stack-pill">NAT / PAT</span>
+      <span class="stack-pill">DHCP</span>
+      <span class="stack-pill">DNS</span>
+    </div>
+
+    <div class="stack-category">Sécurité & Analyse</div>
+    <div class="stack-row">
+      <span class="stack-pill">pfSense Firewall</span>
+      <span class="stack-pill">Wireshark</span>
+      <span class="stack-pill">tcpdump</span>
+      <span class="stack-pill">Nmap</span>
+      <span class="stack-pill">ACL Cisco</span>
+    </div>
+
+    <div class="stack-category">Services Applicatifs</div>
+    <div class="stack-row">
+      <span class="stack-pill">Active Directory</span>
+      <span class="stack-pill">Apache HTTP</span>
+      <span class="stack-pill">FTP Server</span>
+      <span class="stack-pill">Mail Server</span>
+      <span class="stack-pill">VoIP</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">OFPPT · ISTA NTIC SAFI · 2025–2026</div>
+  <div class="footer-right">
+    Infrastructure Digitale — Systèmes & Réseaux &nbsp;|&nbsp; PFE
+  </div>
+</footer>
+
+<!-- CREDITS / NAMES -->
+<div style="text-align: center; padding: 30px 48px 40px; border-top: 1px solid var(--border); background: var(--bg); position: relative; z-index: 1;">
+  <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px;">Réalisé par</div>
+  <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500; color: var(--text-bright);">
+    <span>✨ Abdrahim</span>
+    <span>✨ Bilal</span>
+    <span>✨ Bouchra</span>
+    <span>✨ Nissrine</span>
+  </div>
+  <div style="margin-top: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--text-dim); letter-spacing: 1px;">
+    Sous l'encadrement de l'équipe pédagogique — OFPPT ISTA NTIC Safi
+  </div>
+</div>
+
+<script>
+  // Intersection Observer for fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animationPlayState = 'running';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => {
+    el.style.animationPlayState = 'paused';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
